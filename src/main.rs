@@ -37,6 +37,12 @@ fn main() {
     let start: Point = Point { x: width/2, y: height/2 };
 
     println!("The center is at {},{}.", start.x, start.y);
+
+    let pixel_count: usize = width * height;
+    
+    for i in 0..pixel_count {
+        println!("{} is a prime: {}",i+1,is_prime(i+1));
+    }
 }
 
 
@@ -45,7 +51,8 @@ fn is_prime(n: usize) -> bool {
         return false;
     }
 
-    for i in 2..f32::sqrt(n as f32).floor() as usize {
+    let root = f32::sqrt(n as f32).round();
+    for i in 2..=root as usize {
         if n % i == 0 {
             return false;
         }
