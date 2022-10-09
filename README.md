@@ -6,11 +6,11 @@ A tool that generates an image of Ulams Spiral.
 
 Ulams Spiral is a graphical depiction of prime numbers. Every number that is prime is colored. The spiral starts in the middle of the image.
 ```
-5  -  4  -  3
-|           |
-6     1  -  2
-|
-7  -  8  -  9 ...
+(5) -  4  - (3)
+ |           |
+ 6     1  - (2)
+ |
+(7) -  8  -  9 ...
 ```
 
 ## How to use this tool
