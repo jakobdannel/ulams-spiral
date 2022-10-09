@@ -1,11 +1,29 @@
 use std::io::*;
 use image::{RgbImage, Rgb};
-use image::{io:: Reader as ImageReader};
 
 struct Point {
     x: usize,
     y: usize
 }
+
+#[derive(PartialEq, Eq)]
+enum Direction {
+    Left,
+    Right,
+    Upwards,
+    Downwards,
+}
+impl Direction {
+    fn next(&self) -> Self{
+        match self {
+            Direction::Left => Direction::Downwards,
+            Direction::Right => Direction::Upwards,
+            Direction::Upwards => Direction::Left,
+            Direction::Downwards => Direction::Right
+        }
+    }
+}
+
 fn main() {
     print!("Please enter a width:");
     let mut input: String = String::new();
@@ -40,13 +58,6 @@ fn main() {
 
     println!("The center is at {},{}.", start.x, start.y);
 
-    let pixel_count: usize = width * height;
-    
-    for i in 0..pixel_count {
-        if is_prime(i+1) {
-            println!("{} is prime.",i+1);
-        }
-    }
     generate_image(width, height, start);
 }
 
@@ -66,8 +77,42 @@ fn is_prime(n: usize) -> bool {
 }
 
 fn generate_image(width: usize, height: usize, start: Point) {
+    let pixel_count = width * height;
     let mut img = RgbImage::new(width as u32, height as u32);
-    img.put_pixel(start.x as u32, start.y as u32, Rgb([255 as u8,255 as u8,255 as u8]));
 
+    let mut current_position: Point = start;
+    let mut direction: Direction = Direction::Right;
+    let mut steps: usize = 0;
+    let mut sidelength: usize = 1;
+    let mut k = 0;
+    for i in 0..pixel_count {
+        if is_prime(i+1) {
+            img.put_pixel(current_position.x as u32, current_position.y as u32, Rgb([255,255,255]));
+        }
+
+        if direction == Direction::Left {
+            current_position.x -= 1;
+            steps += 1;
+        } else if direction == Direction::Right {
+            current_position.x += 1;
+            steps += 1;
+        } else if direction == Direction::Upwards {
+            current_position.y -= 1;
+            steps += 1;
+        } else if direction == Direction::Downwards {
+            current_position.y += 1;
+            steps += 1;
+        }
+        
+        if steps == sidelength {
+            steps = 0;
+            direction = direction.next();
+            k += 1;
+            if k % 2 == 0 {
+                k = 0;
+                sidelength += 1;
+            }
+        }
+    }
     img.save("./output/output.png").expect("write img");
 }
