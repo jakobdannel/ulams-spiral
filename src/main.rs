@@ -20,6 +20,13 @@ fn main() {
         Err(e) => println!("error: {}", e),
     }
     input.clear();
+    
+    if (width%2) == 0 {
+        width += 1;
+    }
+    if (height%2) == 0 {
+        height += 1;
+    }
 
     println!("The generated image will be {} pixels wide and {} pixels tall.", width, height);   
 }
