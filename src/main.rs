@@ -38,3 +38,17 @@ fn main() {
 
     println!("The center is at {},{}.", start.x, start.y);
 }
+
+
+fn is_prime(n: usize) -> bool {
+    if n == 1 {
+        return false;
+    }
+
+    for i in 2..f32::sqrt(n as f32).floor() as usize {
+        if n % i == 0 {
+            return false;
+        }
+    }
+    return true;
+}
