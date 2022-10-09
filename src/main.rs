@@ -41,7 +41,9 @@ fn main() {
     let pixel_count: usize = width * height;
     
     for i in 0..pixel_count {
-        println!("{} is a prime: {}",i+1,is_prime(i+1));
+        if is_prime(i+1) {
+            println!("{} is prime.",i+1);
+        }
     }
 }
 
