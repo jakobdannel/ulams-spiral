@@ -16,6 +16,7 @@ Ulam's Spiral is a graphical depiction of prime numbers. Every number that is pr
  |  
  21 -  22 - (23)-  24 -  25
 ```
+Unlike a random distribution of numbers, Ulam's Spiral shows patterns of vertical, diagonal and horizontal lines. The reasons for this are not fully understood to this day.
 
 ## How to use this tool
 
