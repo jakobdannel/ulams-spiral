@@ -1,4 +1,4 @@
-use std::io::*;
+use std::{io::*, env::home_dir};
 use image::{RgbImage, Rgb};
 
 struct Point {
@@ -25,7 +25,7 @@ impl Direction {
 }
 
 fn main() {
-    print!("Please enter a width:");
+    print!("Please enter a width and height:");
     let mut input: String = String::new();
 
     let mut width: usize = 100;
@@ -35,15 +35,7 @@ fn main() {
         Err(e) => println!("error: {}", e),
     }
     input.clear();
-    print!("Please enter a height:");
-    
-    let mut height: usize = 100;
-    stdout().flush().expect("flush");
-    match stdin().read_line(&mut input) {
-        Ok(_n) => height = input.trim().parse().expect("No number"),
-        Err(e) => println!("error: {}", e),
-    }
-    input.clear();
+    let mut height = width;
 
     if (width%2) == 0 {
         width += 1;
