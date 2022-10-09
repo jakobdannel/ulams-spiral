@@ -81,7 +81,7 @@ fn generate_image(width: usize, height: usize, start: Point) {
     let mut direction: Direction = Direction::Right;
     let mut steps: usize = 0;
     let mut sidelength: usize = 1;
-    let mut k = 0;
+    let mut counter = 0;
     for i in 0..pixel_count {
         if is_prime(i + 1) {
             img.put_pixel(
@@ -108,9 +108,9 @@ fn generate_image(width: usize, height: usize, start: Point) {
         if steps == sidelength {
             steps = 0;
             direction = direction.next();
-            k += 1;
-            if k % 2 == 0 {
-                k = 0;
+            counter += 1;
+            if counter % 2 == 0 {
+                counter = 0;
                 sidelength += 1;
             }
         }
