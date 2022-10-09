@@ -22,6 +22,6 @@ Ulams Spiral is a graphical depiction of prime numbers. Every number that is pri
 * Enter desired size
 * The output is generated as a .png file under `/output`
 
-## Example image
+## Example image (1001x1001)
 
 ![Example image](/output/output.png)
