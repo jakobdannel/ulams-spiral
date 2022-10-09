@@ -2,9 +2,9 @@
 
 A tool that generates an image of Ulams Spiral.
 
-## What is ulams spiral?
+## What is Ulam's Spiral?
 
-Ulams Spiral is a graphical depiction of prime numbers. Every number that is prime is colored. The spiral starts in the middle of the image.
+Ulam's Spiral is a graphical depiction of prime numbers. Every number that is prime is colored. The spiral starts in the middle of the image.
 ```
 (5) -  4  - (3)
  |           |
