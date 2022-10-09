@@ -10,3 +10,7 @@ A tool that generates an image of Ulams Spiral.
 * Execute file `/targets/release/ulams-spiral`
 * Enter desired size
 * The output is generated as a .png file under `/output`
+
+## Example image
+
+![Example image](/output/output.png)
