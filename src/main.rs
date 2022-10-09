@@ -1,4 +1,6 @@
 use std::io::*;
+use image::{RgbImage, Rgb};
+use image::{io:: Reader as ImageReader};
 
 struct Point {
     x: usize,
@@ -45,6 +47,7 @@ fn main() {
             println!("{} is prime.",i+1);
         }
     }
+    generate_image(width, height, start);
 }
 
 
@@ -60,4 +63,11 @@ fn is_prime(n: usize) -> bool {
         }
     }
     return true;
+}
+
+fn generate_image(width: usize, height: usize, start: Point) {
+    let mut img = RgbImage::new(width as u32, height as u32);
+    img.put_pixel(start.x as u32, start.y as u32, Rgb([255 as u8,255 as u8,255 as u8]));
+
+    img.save("./output/output.png").expect("write img");
 }
