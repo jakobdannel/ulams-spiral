@@ -73,7 +73,7 @@ fn is_prime(n: usize) -> bool {
             return false;
         }
     }
-    return true;
+    true
 }
 
 fn generate_image(width: usize, height: usize, start: Point) {
