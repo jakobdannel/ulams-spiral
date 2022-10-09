@@ -15,7 +15,6 @@ Ulam's Spiral is a graphical depiction of prime numbers. Every number that is pr
  20   (7) -  8  -  9  -  10
  |  
  21 -  22 - (23)-  24 -  25
-
 ```
 
 ## How to use this tool
