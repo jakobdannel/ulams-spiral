@@ -1,5 +1,9 @@
 use std::io::*;
 
+struct Point {
+    x: usize,
+    y: usize
+}
 fn main() {
     print!("Please enter a width:");
     let mut input: String = String::new();
@@ -20,7 +24,7 @@ fn main() {
         Err(e) => println!("error: {}", e),
     }
     input.clear();
-    
+
     if (width%2) == 0 {
         width += 1;
     }
@@ -28,5 +32,9 @@ fn main() {
         height += 1;
     }
 
-    println!("The generated image will be {} pixels wide and {} pixels tall.", width, height);   
+    println!("The generated image will be {} pixels wide and {} pixels tall.", width, height);
+
+    let start: Point = Point { x: width/2, y: height/2 };
+
+    println!("The center is at {},{}.", start.x, start.y);
 }
