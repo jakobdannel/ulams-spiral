@@ -1,9 +1,9 @@
-use std::{io::*, env::home_dir};
-use image::{RgbImage, Rgb};
+use image::{Rgb, RgbImage};
+use std::io::*;
 
 struct Point {
     x: usize,
-    y: usize
+    y: usize,
 }
 
 #[derive(PartialEq, Eq)]
@@ -14,12 +14,12 @@ enum Direction {
     Downwards,
 }
 impl Direction {
-    fn next(&self) -> Self{
+    fn next(&self) -> Self {
         match self {
             Direction::Left => Direction::Downwards,
             Direction::Right => Direction::Upwards,
             Direction::Upwards => Direction::Left,
-            Direction::Downwards => Direction::Right
+            Direction::Downwards => Direction::Right,
         }
     }
 }
@@ -37,22 +37,27 @@ fn main() {
     input.clear();
     let mut height = width;
 
-    if (width%2) == 0 {
+    if (width % 2) == 0 {
         width += 1;
     }
-    if (height%2) == 0 {
+    if (height % 2) == 0 {
         height += 1;
     }
 
-    println!("The generated image will be {} pixels wide and {} pixels tall.", width, height);
+    println!(
+        "The generated image will be {} pixels wide and {} pixels tall.",
+        width, height
+    );
 
-    let start: Point = Point { x: width/2, y: height/2 };
+    let start: Point = Point {
+        x: width / 2,
+        y: height / 2,
+    };
 
     println!("The center is at {},{}.", start.x, start.y);
 
     generate_image(width, height, start);
 }
-
 
 fn is_prime(n: usize) -> bool {
     if n == 1 {
@@ -78,8 +83,12 @@ fn generate_image(width: usize, height: usize, start: Point) {
     let mut sidelength: usize = 1;
     let mut k = 0;
     for i in 0..pixel_count {
-        if is_prime(i+1) {
-            img.put_pixel(current_position.x as u32, current_position.y as u32, Rgb([255,255,255]));
+        if is_prime(i + 1) {
+            img.put_pixel(
+                current_position.x as u32,
+                current_position.y as u32,
+                Rgb([255, 255, 255]),
+            );
         }
 
         if direction == Direction::Left {
@@ -95,7 +104,7 @@ fn generate_image(width: usize, height: usize, start: Point) {
             current_position.y += 1;
             steps += 1;
         }
-        
+
         if steps == sidelength {
             steps = 0;
             direction = direction.next();
