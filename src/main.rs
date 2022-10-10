@@ -30,8 +30,6 @@ impl Direction {
     }
 }
 
-
-
 fn main() {
     print!("Please enter a width and height:");
     let mut input: String = String::new();
@@ -71,7 +69,7 @@ fn main() {
                 rainbow = false
             } else if input.trim() == "y" {
                 rainbow = true;
-            } else if input =="\n" {
+            } else if input == "\n" {
                 rainbow = false;
             } else {
                 println!("Invalid input, no selected.");
@@ -125,13 +123,17 @@ fn generate_image(width: usize, height: usize, inverted: bool, rainbow: bool) {
     let mut sidelength: usize = 1;
     let mut counter = 0;
     let mut percentage: f32;
-    let mut rgb: RGB = RGB { red: 255, green: 255, blue: 255 };
+    let mut rgb: RGB = RGB {
+        red: 255,
+        green: 255,
+        blue: 255,
+    };
     for i in 0..pixel_count {
         percentage = i as f32 / pixel_count as f32;
         if rainbow {
             rgb = hsl_to_rgb(percentage, 1.0, 0.5);
         }
-      
+
         if is_prime(i + 1) ^ inverted {
             img.put_pixel(
                 current_position.x as u32,
@@ -167,10 +169,14 @@ fn generate_image(width: usize, height: usize, inverted: bool, rainbow: bool) {
     img.save("./output/output.png").expect("write img");
 }
 
-fn hsl_to_rgb (hue: f32, saturation: f32, luminance: f32) -> RGB {
-    let mut rgb: RGB = RGB { red: 0, green: 0, blue: 0 };
-    
-    let c = (1.0 - (2.0*luminance - 1.0).abs()) * saturation;
+fn hsl_to_rgb(hue: f32, saturation: f32, luminance: f32) -> RGB {
+    let mut rgb: RGB = RGB {
+        red: 0,
+        green: 0,
+        blue: 0,
+    };
+
+    let c = (1.0 - (2.0 * luminance - 1.0).abs()) * saturation;
     let h = hue * 6.0;
     let x = c * (1.0 - (h % 2.0 - 1.0).abs());
     let m = luminance - (c / 2.0);
