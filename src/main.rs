@@ -20,7 +20,7 @@ enum Direction {
     Downwards,
 }
 impl Direction {
-    fn next(&self) -> Self {
+    fn turn_counterclockwise(&self) -> Self {
         match self {
             Direction::Left => Direction::Downwards,
             Direction::Right => Direction::Upwards,
@@ -158,7 +158,7 @@ fn generate_image(width: usize, height: usize, inverted: bool, rainbow: bool) {
 
         if steps == sidelength {
             steps = 0;
-            direction = direction.next();
+            direction = direction.turn_counterclockwise();
             counter += 1;
             if counter % 2 == 0 {
                 counter = 0;
