@@ -27,6 +27,7 @@ impl Direction {
 fn main() {
     print!("Please enter a width and height:");
     let mut input: String = String::new();
+    let mut inverted: bool = false;
 
     let mut width: usize = 100;
     stdout().flush().expect("flush");
@@ -35,6 +36,21 @@ fn main() {
         Err(e) => println!("error: {}", e),
     }
     input.clear();
+    print!("Background color black or white? (b/w):");
+    stdout().flush().expect("flush");
+    match stdin().read_line(&mut input) {
+        Ok(_n) => {
+            if input.trim() == "b" {
+                inverted = false
+            } else if input.trim() == "w" {
+                inverted = true
+            } else {
+                println!("Invalid input, black selected.");
+            }
+        }
+        Err(e) => println!("error: {}", e),
+    }
+
     let mut height = width;
 
     if (width % 2) == 0 {
@@ -49,7 +65,7 @@ fn main() {
         width, height
     );
 
-    generate_image(width, height);
+    generate_image(width, height, inverted);
 }
 
 fn is_prime(n: usize) -> bool {
@@ -66,7 +82,7 @@ fn is_prime(n: usize) -> bool {
     true
 }
 
-fn generate_image(width: usize, height: usize) {
+fn generate_image(width: usize, height: usize, inverted: bool) {
     let pixel_count = width * height;
     let start: Point = Point {
         x: width / 2,
@@ -80,7 +96,7 @@ fn generate_image(width: usize, height: usize) {
     let mut sidelength: usize = 1;
     let mut counter = 0;
     for i in 0..pixel_count {
-        if is_prime(i + 1) {
+        if is_prime(i + 1) ^ inverted {
             img.put_pixel(
                 current_position.x as u32,
                 current_position.y as u32,
