@@ -49,14 +49,7 @@ fn main() {
         width, height
     );
 
-    let start: Point = Point {
-        x: width / 2,
-        y: height / 2,
-    };
-
-    println!("The center is at {},{}.", start.x, start.y);
-
-    generate_image(width, height, start);
+    generate_image(width, height);
 }
 
 fn is_prime(n: usize) -> bool {
@@ -73,8 +66,12 @@ fn is_prime(n: usize) -> bool {
     true
 }
 
-fn generate_image(width: usize, height: usize, start: Point) {
+fn generate_image(width: usize, height: usize) {
     let pixel_count = width * height;
+    let start: Point = Point {
+        x: width / 2,
+        y: height / 2,
+    };
     let mut img = RgbImage::new(width as u32, height as u32);
 
     let mut current_position: Point = start;
