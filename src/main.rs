@@ -6,6 +6,12 @@ struct Point {
     y: usize,
 }
 
+struct RGB {
+    red: u8,
+    green: u8,
+    blue: u8,
+}
+
 #[derive(PartialEq, Eq)]
 enum Direction {
     Left,
@@ -24,10 +30,13 @@ impl Direction {
     }
 }
 
+
+
 fn main() {
     print!("Please enter a width and height:");
     let mut input: String = String::new();
     let mut inverted: bool = false;
+    let mut rainbow: bool = true;
 
     let mut width: usize = 100;
     stdout().flush().expect("flush");
@@ -36,7 +45,7 @@ fn main() {
         Err(e) => println!("error: {}", e),
     }
     input.clear();
-    print!("Background color black or white? (b/w):");
+    print!("Background color black or white? (Default black) (b/w):");
     stdout().flush().expect("flush");
     match stdin().read_line(&mut input) {
         Ok(_n) => {
@@ -44,8 +53,28 @@ fn main() {
                 inverted = false
             } else if input.trim() == "w" {
                 inverted = true
+            } else if input == "\n" {
+                inverted = false;
             } else {
                 println!("Invalid input, black selected.");
+            }
+        }
+        Err(e) => println!("error: {}", e),
+    }
+    input.clear();
+
+    print!("Rainbow? (y/N):");
+    stdout().flush().expect("flush");
+    match stdin().read_line(&mut input) {
+        Ok(_n) => {
+            if input.trim() == "n" {
+                rainbow = false
+            } else if input.trim() == "y" {
+                rainbow = true;
+            } else if input =="\n" {
+                rainbow = false;
+            } else {
+                println!("Invalid input, no selected.");
             }
         }
         Err(e) => println!("error: {}", e),
@@ -65,7 +94,7 @@ fn main() {
         width, height
     );
 
-    generate_image(width, height, inverted);
+    generate_image(width, height, inverted, rainbow);
 }
 
 fn is_prime(n: usize) -> bool {
@@ -82,7 +111,7 @@ fn is_prime(n: usize) -> bool {
     true
 }
 
-fn generate_image(width: usize, height: usize, inverted: bool) {
+fn generate_image(width: usize, height: usize, inverted: bool, rainbow: bool) {
     let pixel_count = width * height;
     let start: Point = Point {
         x: width / 2,
@@ -95,12 +124,19 @@ fn generate_image(width: usize, height: usize, inverted: bool) {
     let mut steps: usize = 0;
     let mut sidelength: usize = 1;
     let mut counter = 0;
+    let mut percentage: f32;
+    let mut rgb: RGB = RGB { red: 255, green: 255, blue: 255 };
     for i in 0..pixel_count {
+        percentage = i as f32 / pixel_count as f32;
+        if rainbow {
+            rgb = hsl_to_rgb(percentage, 1.0, 0.5);
+        }
+      
         if is_prime(i + 1) ^ inverted {
             img.put_pixel(
                 current_position.x as u32,
                 current_position.y as u32,
-                Rgb([255, 255, 255]),
+                Rgb([rgb.red, rgb.green, rgb.blue]),
             );
         }
 
@@ -129,4 +165,45 @@ fn generate_image(width: usize, height: usize, inverted: bool) {
         }
     }
     img.save("./output/output.png").expect("write img");
+}
+
+fn hsl_to_rgb (hue: f32, saturation: f32, luminance: f32) -> RGB {
+    let mut rgb: RGB = RGB { red: 0, green: 0, blue: 0 };
+    
+    let c = (1.0 - (2.0*luminance - 1.0).abs()) * saturation;
+    let h = hue * 6.0;
+    let x = c * (1.0 - (h % 2.0 - 1.0).abs());
+    let m = luminance - (c / 2.0);
+    let mut r = 0.0;
+    let mut g = 0.0;
+    let mut b = 0.0;
+    if 0.0 <= h && h <= 1.0 {
+        r = c;
+        g = x;
+        b = 0.0;
+    } else if 1.0 < h && h <= 2.0 {
+        r = x;
+        g = c;
+        b = 0.0;
+    } else if 2.0 < h && h <= 3.0 {
+        r = 0.0;
+        g = c;
+        b = x;
+    } else if 3.0 < h && h <= 4.0 {
+        r = 0.0;
+        g = x;
+        b = c;
+    } else if 4.0 < h && h <= 5.0 {
+        r = x;
+        g = 0.0;
+        b = c;
+    } else if 5.0 < h && h <= 6.0 {
+        r = c;
+        g = 0.0;
+        b = x;
+    }
+    rgb.red = ((r + m) * 255.0) as u8;
+    rgb.green = ((g + m) * 255.0) as u8;
+    rgb.blue = ((b + m) * 255.0) as u8;
+    rgb
 }
