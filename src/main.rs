@@ -6,7 +6,7 @@ struct Point {
     y: usize,
 }
 
-struct RGB {
+struct RgbColor {
     red: u8,
     green: u8,
     blue: u8,
@@ -120,7 +120,7 @@ fn generate_image(width: usize, height: usize, inverted: bool, rainbow: bool) {
     let mut sidelength: usize = 1;
     let mut counter = 0;
     let mut percentage: f32;
-    let mut rgb: RGB = RGB {
+    let mut rgb: RgbColor = RgbColor {
         red: 255,
         green: 255,
         blue: 255,
@@ -166,8 +166,8 @@ fn generate_image(width: usize, height: usize, inverted: bool, rainbow: bool) {
     img.save("./output/output.png").expect("write img");
 }
 
-fn hsl_to_rgb(hue: f32, saturation: f32, luminance: f32) -> RGB {
-    let mut rgb: RGB = RGB {
+fn hsl_to_rgb(hue: f32, saturation: f32, luminance: f32) -> RgbColor {
+    let mut rgb: RgbColor = RgbColor {
         red: 0,
         green: 0,
         blue: 0,
@@ -180,27 +180,27 @@ fn hsl_to_rgb(hue: f32, saturation: f32, luminance: f32) -> RGB {
     let mut r = 0.0;
     let mut g = 0.0;
     let mut b = 0.0;
-    if 0.0 <= h && h <= 1.0 {
+    if (0.0..=1.0).contains(&h) {
         r = c;
         g = x;
         b = 0.0;
-    } else if 1.0 < h && h <= 2.0 {
+    } else if (1.0..=2.0).contains(&h) {
         r = x;
         g = c;
         b = 0.0;
-    } else if 2.0 < h && h <= 3.0 {
+    } else if (2.0..=3.0).contains(&h) {
         r = 0.0;
         g = c;
         b = x;
-    } else if 3.0 < h && h <= 4.0 {
+    } else if (3.0..=4.0).contains(&h) {
         r = 0.0;
         g = x;
         b = c;
-    } else if 4.0 < h && h <= 5.0 {
+    } else if (4.0..=5.0).contains(&h) {
         r = x;
         g = 0.0;
         b = c;
-    } else if 5.0 < h && h <= 6.0 {
+    } else if (5.0..=6.0).contains(&h) {
         r = c;
         g = 0.0;
         b = x;
