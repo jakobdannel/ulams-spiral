@@ -40,7 +40,7 @@ fn main() {
     stdout().flush().expect("flush");
     match stdin().read_line(&mut input) {
         Ok(_n) => width = input.trim().parse().expect("No number"),
-        Err(e) => println!("error: {}", e),
+        Err(e) => println!("error: {e}"),
     }
     input.clear();
     print!("Background color black or white? (Default black) (b/w):");
@@ -57,7 +57,7 @@ fn main() {
                 println!("Invalid input, black selected.");
             }
         }
-        Err(e) => println!("error: {}", e),
+        Err(e) => println!("error: {e}"),
     }
     input.clear();
 
@@ -75,7 +75,7 @@ fn main() {
                 println!("Invalid input, no selected.");
             }
         }
-        Err(e) => println!("error: {}", e),
+        Err(e) => println!("error: {e}"),
     }
 
     let mut height = width;
@@ -87,10 +87,7 @@ fn main() {
         height += 1;
     }
 
-    println!(
-        "The generated image will be {} pixels wide and {} pixels tall.",
-        width, height
-    );
+    println!("The generated image will be {width} pixels wide and {height} pixels tall.");
 
     generate_image(width, height, inverted, rainbow);
 }
